@@ -1,5 +1,6 @@
 package com.performance_challenge
 
+import com.reactlibrary.RNThreadPackage;
 import android.app.Application
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication

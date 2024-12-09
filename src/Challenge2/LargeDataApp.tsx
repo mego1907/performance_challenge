@@ -1,14 +1,14 @@
-import React, {useState, useEffect, useMemo} from 'react';
+import React, {useState, useEffect, useMemo, useCallback} from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
 import Chart from 'react-native-chart-kit';
-import useCount from '../hooks/useCount';
+import useInterval from '../hooks/useInterval';
 
 const LargeDataApp = () => {
   const [data, setData] = useState([]);
   const [chartData, setChartData] = useState([]);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  useCount(0, false, () => console.log('Memory leak potential'));
+  useInterval(0, false, () => console.log('Memory leak potential'));
 
   useEffect(() => {
     const getLargeData = async () => {
@@ -19,7 +19,6 @@ const LargeDataApp = () => {
 
         if (res.status === 200) {
           const resData = await res.json();
-          console.log(resData);
           setData(resData);
         }
       } catch (err) {
@@ -30,19 +29,7 @@ const LargeDataApp = () => {
     getLargeData();
   }, []);
 
-  // useEffect(() => {
-  //   // Memory leak: Event listeners not cleaned up
-  //   const interval = setInterval(() => {
-  //     console.log('Memory leak potential');
-  //   }, 1000);
-
-  //   return () => {
-  //     // Missing cleanup
-  //     clearInterval(interval);
-  //   };
-  // }, []);
-
-  const processData = () => {
+  const processData = useCallback(() => {
     setIsProcessing(true);
     // Heavy computation performed on the main thread
     const sortedData = data.sort((a, b) => b.value - a.value);
@@ -53,7 +40,7 @@ const LargeDataApp = () => {
 
     setChartData(aggregatedData);
     setIsProcessing(false);
-  };
+  }, [data]);
 
   const chart = useMemo(() => {
     return {

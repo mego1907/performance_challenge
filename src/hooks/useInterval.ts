@@ -4,7 +4,7 @@ const defaultBody = () => {
   console.log('Interval active');
 };
 
-const useCount = (init = 0, state = true, body = defaultBody) => {
+const useInterval = (init = 0, state = true, body = defaultBody) => {
   const [count, setCount] = useState(init);
 
   // Interval
@@ -27,4 +27,4 @@ const useCount = (init = 0, state = true, body = defaultBody) => {
   return [count];
 };
 
-export default useCount;
+export default useInterval;

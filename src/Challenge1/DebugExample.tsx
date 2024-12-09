@@ -1,11 +1,11 @@
 import React from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
 
-import useCount from '../hooks/useCount';
+import useInterval from '../hooks/useInterval';
 import PostsList from './components/PostsList';
 
 const DebugExample = () => {
-  const [count] = useCount(0, true);
+  const [count] = useInterval(0, true);
 
   return (
     <View style={styles.container}>
